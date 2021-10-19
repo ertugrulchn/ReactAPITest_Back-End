@@ -28,7 +28,7 @@ namespace ReactAPITest_Back_End
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
             services.AddControllers();
             services.AddDbContext<UserDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
             services.AddSwaggerGen(c =>
@@ -48,9 +48,10 @@ namespace ReactAPITest_Back_End
             }
 
             app.UseHttpsRedirection();
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyOrigin());
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true)); // allow any origin .AllowCredentials())
+
 
             app.UseAuthorization();
 
