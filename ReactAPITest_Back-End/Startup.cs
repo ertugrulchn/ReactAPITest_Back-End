@@ -48,6 +48,7 @@ namespace ReactAPITest_Back_End
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyOrigin());
 
             app.UseRouting();
 
